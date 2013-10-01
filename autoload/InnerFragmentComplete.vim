@@ -53,26 +53,40 @@ function! InnerFragmentComplete#InnerFragmentComplete( findstart, base )
 	let l:matches = []
 	let l:options = {'complete': s:GetCompleteOption()}
 
+	let l:camelCaseExpr = CamelCaseComplete#BuildRegexp(a:base, 0)[0]
 	let [l:firstLetter, l:rest] = matchlist(a:base, '^\(\a\)\?\(.*\)')[1:2]
 	if empty(l:firstLetter)
-	    let l:baseExpr = '\k\zs' . escape(l:rest, '\')
+	    " When there's both a keyword and CamelCase match at the same
+	    " position, the longer one wins and is taken. It's expected that
+	    " both are offered.
+	    if a:base =~# '^\d\+$'
+		" For a digits-only base, the keyword part
+		let l:baseExpr = printf('\k\zs\%%(%s\)', l:camelCaseExpr)
+	    else
+		let l:baseExpr = printf('\k\zs\%%(%s\k\+\|%s\)', escape(l:rest, '\'), l:camelCaseExpr)
+	    endif
 	else
 	    " Make the search insensitive to the case of the first character,
 	    " and choose different look-behind assertions for the preceding
 	    " fragment.
 	    " Note: Special case to match "Header" inside "HTTPHeader".
-	    let l:baseExpr = printf('\%%(\%%(\%%(\k\&\U%s\)\)\zs%s\|\%%(\k\&\A\)\zs%s\)%s',
+	    let l:baseExpr = printf('\%%(\%%(\%%(\k\&\U%s\)\)\zs%s\|\%%(\k\&\A\)\zs%s\)%s\k\+',
 	    \   (l:rest =~# '^\l' ? '\|\u' : ''),
 	    \   toupper(l:firstLetter),
 	    \   tolower(l:firstLetter),
 	    \   escape(l:rest, '\')
 	    \)
+	    let l:baseExpr .= printf('\|%s\zs_\@!%s',
+	    \   (l:firstLetter =~# '\u' ? '\k' : '\%(\k\&\A\)'),
+	    \   l:camelCaseExpr
+	    \)
 
 	    " Convert the matches to the case of the first character.
 	    let l:options.processor = (l:firstLetter =~# '\u' ? function('InnerFragmentComplete#UpperCase') : function('InnerFragmentComplete#LowerCase'))
 	endif
-echomsg '****' string(l:baseExpr)
-	call CompleteHelper#FindMatches(l:matches, '\V' . l:baseExpr . '\k\+', l:options)
+
+	call CompleteHelper#FindMatches(l:matches, '\V' . l:baseExpr, l:options)
+echomsg '****' string(a:base) string(l:baseExpr) len(l:matches)
 	return l:matches
     endif
 endfunction
