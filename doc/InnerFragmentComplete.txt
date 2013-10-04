@@ -41,8 +41,9 @@ CTRL-X i		Find matches for inner fragments. It first searches
 			matches of the keyword characters before the cursor at
 			the inner fragment start, or for fragments whose
 			individual words begin with the typed letters in front
-			of the cursor (like with the strict |i_CTRL-X_CTRL-C|
-			|CamelCaseComplete.vim| completion).
+			of the cursor. (The latter requires the optional
+			|CamelCaseComplete.vim| plugin, and then works like
+			with the strict |i_CTRL-X_CTRL-C| completion.)
 			The completion base starts with the first uppercase
 			character before the cursor (so "myCust" would find
 			fragments starting with "Cust", e.g. in
@@ -73,8 +74,10 @@ To uninstall, use the |:RmVimball| command.
 DEPENDENCIES				  *InnerFragmentComplete-dependencies*
 
 - Requires Vim 7.0 or higher.
-- Requires the |CompleteHelper.vim| plugin (vimscript #3914).
-- Requires the |CamelCaseComplete.vim| plugin (vimscript #3915).
+- Requires the |CompleteHelper.vim| (vimscript #3914) plugin, version 1.32 or
+  higher.
+- |CamelCaseComplete.vim| (vimscript #3915) plugin, version 1.01 or higher
+  (optional).
 
 ==============================================================================
 CONFIGURATION				 *InnerFragmentComplete-configuration*
