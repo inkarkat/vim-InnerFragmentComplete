@@ -83,10 +83,20 @@ DEPENDENCIES				  *InnerFragmentComplete-dependencies*
 CONFIGURATION				 *InnerFragmentComplete-configuration*
 
 For a permanent configuration, put the following commands into your |vimrc|:
-configvar
-						 *InnerFragmentComplete-remap*
-plugmap
 
+	 *b:InnerFragmentComplete_complete* *g:InnerFragmentComplete_complete*
+Analoguous to the 'complete' option, you can specify which buffers will be
+scanned for completion candidates. Currently, '.' (current buffer), 'w'
+(buffers from other windows), and 'b' (other listed buffers) are supported. >
+    let g:InnerFragmentComplete_complete = '.,w,b'
+The global setting can be overridden for a particular buffer
+(b:InnerFragmentComplete_complete).
+						 *InnerFragmentComplete-remap*
+If you want to use a different mapping, map your keys to the
+<Plug>(InnerFragmentComplete) mapping target _before_ sourcing the script
+(e.g. in your |vimrc|): >
+    imap <C-x>i  <Plug>(InnerFragmentComplete)
+<
 ==============================================================================
 INTEGRATION				   *InnerFragmentComplete-integration*
 
