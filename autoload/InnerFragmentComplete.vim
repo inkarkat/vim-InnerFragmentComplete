@@ -1,8 +1,9 @@
 " InnerFragmentComplete.vim: Insert mode completion based on fragments inside words.
 "
 " DEPENDENCIES:
-"   - CompleteHelper.vim autoload script
+"   - CompleteHelper.vim autoload script, version 1.32 or higher
 "   - Complete/Repeat.vim autoload script
+"   - CamelCaseComplete plugin (optional)
 "
 " Copyright: (C) 2013 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
@@ -10,6 +11,8 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"	002	02-Oct-2013	Implement integration with CamelCaseComplete
+"				plugin.
 "	001	01-Oct-2013	file creation
 let s:save_cpo = &cpo
 set cpo&vim
@@ -53,39 +56,45 @@ function! InnerFragmentComplete#InnerFragmentComplete( findstart, base )
 	let l:matches = []
 	let l:options = {'complete': s:GetCompleteOption()}
 
-	let l:camelCaseExpr = CamelCaseComplete#BuildRegexp(a:base, 0)[0]
+	let l:camelCaseExpr = ''
+	if exists('g:loaded_CamelCaseComplete') && g:loaded_CamelCaseComplete
+	    let l:camelCaseExpr = CamelCaseComplete#BuildRegexp(a:base, 0)[0]
+	endif
+
+	" When there's both a keyword and CamelCase match at the same position,
+	" the longer one in a single branch would win and is taken. It's
+	" expected that both are offered, so submit keyword and CamelCase
+	" patterns separately.
+
 	let [l:firstLetter, l:rest] = matchlist(a:base, '^\(\a\)\?\(.*\)')[1:2]
 	if empty(l:firstLetter)
-	    " When there's both a keyword and CamelCase match at the same
-	    " position, the longer one wins and is taken. It's expected that
-	    " both are offered.
-	    if a:base =~# '^\d\+$'
-		" For a digits-only base, the keyword part
-		let l:baseExpr = printf('\k\zs\%%(%s\)', l:camelCaseExpr)
-	    else
-		let l:baseExpr = printf('\k\zs\%%(%s\k\+\|%s\)', escape(l:rest, '\'), l:camelCaseExpr)
+	    let l:baseExpr = [printf('\V\k\zs\%%(%s\k\+\)', escape(l:rest, '\'))]
+	    if ! empty(l:camelCaseExpr)
+		call add(l:baseExpr, printf('\V\k\zs\%%(%s\)', l:camelCaseExpr))
 	    endif
 	else
 	    " Make the search insensitive to the case of the first character,
 	    " and choose different look-behind assertions for the preceding
 	    " fragment.
 	    " Note: Special case to match "Header" inside "HTTPHeader".
-	    let l:baseExpr = printf('\%%(\%%(\%%(\k\&\U%s\)\)\zs%s\|\%%(\k\&\A\)\zs%s\)%s\k\+',
+	    let l:baseExpr = [printf('\V\%%(\%%(\%%(\k\&\U%s\)\)\zs%s\|\%%(\k\&\A\)\zs%s\)%s\k\+',
 	    \   (l:rest =~# '^\l' ? '\|\u' : ''),
 	    \   toupper(l:firstLetter),
 	    \   tolower(l:firstLetter),
 	    \   escape(l:rest, '\')
-	    \)
-	    let l:baseExpr .= printf('\|%s\zs_\@!%s',
-	    \   (l:firstLetter =~# '\u' ? '\k' : '\%(\k\&\A\)'),
-	    \   l:camelCaseExpr
-	    \)
+	    \)]
+	    if ! empty(l:camelCaseExpr)
+		call add(l:baseExpr, printf('\V%s\zs_\@!%s',
+		\   (l:firstLetter =~# '\u' ? '\k' : '\%(\k\&\A\)'),
+		\   l:camelCaseExpr
+		\))
+	    endif
 
 	    " Convert the matches to the case of the first character.
 	    let l:options.processor = (l:firstLetter =~# '\u' ? function('InnerFragmentComplete#UpperCase') : function('InnerFragmentComplete#LowerCase'))
 	endif
 
-	call CompleteHelper#FindMatches(l:matches, '\V' . l:baseExpr, l:options)
+	call CompleteHelper#FindMatches(l:matches, l:baseExpr, l:options)
 echomsg '****' string(a:base) string(l:baseExpr) len(l:matches)
 	return l:matches
     endif
