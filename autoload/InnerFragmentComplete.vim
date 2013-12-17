@@ -43,7 +43,7 @@ function! InnerFragmentComplete#InnerFragmentComplete( findstart, base )
     if a:findstart
 	" Locate the start of the keyword characters (stopping when there's an
 	" underscore or a transition from uppercase to lowercase).
-    	let l:startCol = searchpos('\l\zs\u\+\%(\u\@!_\@!\k\)*\%#', 'bn', line('.'))[1] " Try to find lowercase-uppercase transition first.
+	let l:startCol = searchpos('\l\zs\u\+\%(\u\@!_\@!\k\)*\%#', 'bn', line('.'))[1] " Try to find lowercase-uppercase transition first.
 	if l:startCol == 0
 	    let l:startCol = searchpos('\%(_\@!\k\)\+\%#', 'bn', line('.'))[1]  " Then try non-underscore keyword characters.
 	    if l:startCol == 0
@@ -76,7 +76,7 @@ function! InnerFragmentComplete#InnerFragmentComplete( findstart, base )
 	    " Make the search insensitive to the case of the first character,
 	    " and choose different look-behind assertions for the preceding
 	    " fragment.
-	    " Note: Special case to match "Header" inside "HTTPHeader".
+	    " Note: Special case to match e.g. "Header" inside "HTTPHeader".
 	    let l:baseExpr = [printf('\V\%%(\%%(\%%(\k\&\U%s\)\)\zs%s\|\%%(\k\&\A\)\zs%s\)%s\k\+',
 	    \   (l:rest =~# '^\l' ? '\|\u' : ''),
 	    \   toupper(l:firstLetter),
@@ -95,7 +95,7 @@ function! InnerFragmentComplete#InnerFragmentComplete( findstart, base )
 	endif
 
 	call CompleteHelper#FindMatches(l:matches, l:baseExpr, l:options)
-echomsg '****' string(a:base) string(l:baseExpr) len(l:matches)
+"****D echomsg '****' string(a:base) string(l:baseExpr) len(l:matches)
 	return l:matches
     endif
 endfunction
