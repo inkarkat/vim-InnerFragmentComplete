@@ -11,12 +11,18 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.00.003	18-Dec-2013	Also offer following fragments, not just
+"				keywords after non-keywords, when repeating
+"				after a CamelCase completion.
 "	002	02-Oct-2013	Implement integration with CamelCaseComplete
 "				plugin.
 "	001	01-Oct-2013	file creation
 let s:save_cpo = &cpo
 set cpo&vim
 
+function! s:HasCamelCaseComplete()
+    return (exists('g:loaded_CamelCaseComplete') && g:loaded_CamelCaseComplete)
+endfunction
 function! s:GetCompleteOption()
     return (exists('b:InnerFragmentComplete_complete') ? b:InnerFragmentComplete_complete : g:InnerFragmentComplete_complete)
 endfunction
@@ -35,7 +41,13 @@ function! InnerFragmentComplete#InnerFragmentComplete( findstart, base )
 	    return col('.') - 1
 	else
 	    let l:matches = []
-	    call CompleteHelper#FindMatches(l:matches, '\V\k' . escape(s:fullText, '\') . '\zs\%(\k\@!\.\)\+\k\+', {'complete': s:GetCompleteOption()})
+
+	    " When the previous completion was part of a CamelCaseWord (e.g.
+	    " "CamelCase"), we also need to offer following fragments ("Word",
+	    " and "_word"), not just keywords after non-keywords.
+	    let l:repeatSeparatorExpr = (s:HasCamelCaseComplete() ? '\%(\k\@!\.\|_\|\u\)\+' : '\%(\k\@!\.\)\+')
+
+	    call CompleteHelper#FindMatches(l:matches, '\V\k' . escape(s:fullText, '\') . '\zs' . l:repeatSeparatorExpr . '\k\+', {'complete': s:GetCompleteOption()})
 	    return l:matches
 	endif
     endif
@@ -56,10 +68,7 @@ function! InnerFragmentComplete#InnerFragmentComplete( findstart, base )
 	let l:matches = []
 	let l:options = {'complete': s:GetCompleteOption()}
 
-	let l:camelCaseExpr = ''
-	if exists('g:loaded_CamelCaseComplete') && g:loaded_CamelCaseComplete
-	    let l:camelCaseExpr = CamelCaseComplete#BuildRegexp(a:base, 0)[0]
-	endif
+	let l:camelCaseExpr = (s:HasCamelCaseComplete() ? CamelCaseComplete#BuildRegexp(a:base, 0)[0] : '')
 
 	" When there's both a keyword and CamelCase match at the same position,
 	" the longer one in a single branch would win and is taken. It's
