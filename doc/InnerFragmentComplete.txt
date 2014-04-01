@@ -6,7 +6,6 @@ description			|InnerFragmentComplete-description|
 usage				|InnerFragmentComplete-usage|
 installation			|InnerFragmentComplete-installation|
 configuration			|InnerFragmentComplete-configuration|
-integration			|InnerFragmentComplete-integration|
 limitations			|InnerFragmentComplete-limitations|
 known problems			|InnerFragmentComplete-known-problems|
 todo				|InnerFragmentComplete-todo|
@@ -28,6 +27,8 @@ SEE ALSO								     *
   inside CamelCaseWords or underscore_words, not whole words.
 - BidiComplete (vimscript #4658) can complete inner (or leftmost) fragments
   when there's already a completion base after the cursor.
+- Check out the |CompleteHelper.vim| plugin page (vimscript #3914) for a full
+  list of insert mode completions powered by it.
 
 ==============================================================================
 USAGE						 *InnerFragmentComplete-usage*
@@ -58,6 +59,10 @@ CTRL-X i		Find matches for inner fragments. It first searches
 			"comp" will match "compress" inside "decompress").
 
 EXAMPLE					       *InnerFragmentComplete-example*
+
+The text contains "CamelCaseWords". To write "PascalCaseWords", start either
+with "PascalCaseW" (unique text match), "PascalC" (several text matches), or
+"PascalCW" (unique fragment match).
 
 ==============================================================================
 INSTALLATION				  *InnerFragmentComplete-installation*
@@ -108,7 +113,7 @@ IDEAS						 *InnerFragmentComplete-ideas*
 ==============================================================================
 HISTORY					       *InnerFragmentComplete-history*
 
-GOAL
+1.00	19-Dec-2013
 First published version.
 
 0.01	01-Oct-2013
