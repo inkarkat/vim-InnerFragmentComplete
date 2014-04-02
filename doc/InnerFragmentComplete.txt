@@ -47,12 +47,15 @@ CTRL-X i		Find matches for inner fragments. It first searches
 			The completion base starts with the first uppercase
 			character before the cursor (so "myCust" would find
 			fragments starting with "Cust", e.g. in
-			"SpecialCustomer"), or the keywords (excluding the
-			underscore character, to be able to trigger completion
-			inside an underscore_word) before the cursor. If the
-			first keyword character is lowercase, the inner
-			CamelCase matches will be converted to start
-			lowercase, too.
+			"SpecialCustomer", and as a special case also
+			stand-alone "Customization", because completion of
+			full words from a prefixed base is useful, too), or
+			the keywords (excluding the underscore character, to
+			be able to trigger completion inside an
+			underscore_word, where the inner fragment restriction
+			is then also dropped) before the cursor. If the first
+			keyword character is lowercase, the inner CamelCase
+			matches will be converted to start lowercase, too.
 
 			If that doesn't find any matches, a fallback search
 			will pick up base matches anywhere inside a word (e.g.
@@ -113,6 +116,12 @@ IDEAS						 *InnerFragmentComplete-ideas*
 ==============================================================================
 HISTORY					       *InnerFragmentComplete-history*
 
+1.10	RELEASEME
+- ENH: When the completion base is prefixed by a fragment (e.g. "my" in
+  "myFoo"), also offer full keyword / CamelCaseWord matches, not just inner
+  fragments, as the default completion / CamelCaseComplete would not use that
+  base, yet it is helpful when completing "myFooBar" from "FooBar".
+
 1.00	19-Dec-2013
 First published version.
 
@@ -120,7 +129,7 @@ First published version.
 Started development.
 
 ==============================================================================
-Copyright: (C) 2013 Ingo Karkat
+Copyright: (C) 2013-2014 Ingo Karkat
 The VIM LICENSE applies to this plugin; see |copyright|.
 
 Maintainer:	Ingo Karkat <ingo@karkat.de>
