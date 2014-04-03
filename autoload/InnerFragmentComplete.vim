@@ -68,14 +68,17 @@ function! InnerFragmentComplete#InnerFragmentComplete( findstart, base )
 	    " from "FooBar".
 	    let s:isBaseInInnerFragment = 1
 	else
-	    " Only match real inner fragments; for a completion of "FB" to
-	    " "FooBar", the CamelCaseComplete completion should be used.
 	    let s:isBaseInInnerFragment = 0
 
 	    let l:startCol = searchpos('\%(_\@!\k\)\+\%#', 'bn', line('.'))[1]  " Then try non-underscore keyword characters.
 	    if l:startCol == 0
 		return "\<C-\>\<C-o>\<Esc>" | " Beep.
 	    endif
+
+	    " Unless there's an underscore before the base, only match real
+	    " inner fragments; for a completion of "FB" to "FooBar", the
+	    " CamelCaseComplete completion should be used.
+	    let s:isBaseInInnerFragment = (search('_\%(_\@!\k\)\+\%#', 'bn', line('.')) != 0)
 	endif
 	return l:startCol - 1 " Return byte index, not column.
     else
