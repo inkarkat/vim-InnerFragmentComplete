@@ -47,15 +47,17 @@ CTRL-X i		Find matches for inner fragments. It first searches
 			The completion base starts with the first uppercase
 			character before the cursor (so "myCust" would find
 			fragments starting with "Cust", e.g. in
-			"SpecialCustomer", and as a special case also
-			stand-alone "Customization", because completion of
-			full words from a prefixed base is useful, too), or
-			the keywords (excluding the underscore character, to
-			be able to trigger completion inside an
-			underscore_word, where the inner fragment restriction
-			is then also dropped) before the cursor. If the first
-			keyword character is lowercase, the inner CamelCase
-			matches will be converted to start lowercase, too.
+			"SpecialCustomer"), or the keywords (excluding the
+			underscore character, to be able to trigger completion
+			inside an underscore_word) before the cursor. If the
+			first keyword character is lowercase, the inner
+			CamelCase matches will be converted to start
+			lowercase, too.
+			If there is a fragment before the completion base
+			(e.g. "My" in "MyCust", or "end_" in "end_foo") the
+			completion not only offers matching inner fragments,
+			but also the complete word match, in order to complete
+			prefixed new words with existing full words.
 
 			If that doesn't find any matches, a fallback search
 			will pick up base matches anywhere inside a word (e.g.
@@ -66,6 +68,9 @@ EXAMPLE					       *InnerFragmentComplete-example*
 The text contains "CamelCaseWords". To write "PascalCaseWords", start either
 with "PascalCaseW" (unique text match), "PascalC" (several text matches), or
 "PascalCW" (unique fragment match).
+
+The text contains "ConfigurationItem". To write "SystemConfigurationItem",
+start with "SystemCo" (full text match) or "SystemCI" (full fragment match).
 
 ==============================================================================
 INSTALLATION				  *InnerFragmentComplete-installation*
