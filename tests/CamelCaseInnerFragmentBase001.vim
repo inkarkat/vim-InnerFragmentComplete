@@ -5,7 +5,7 @@ call vimtest#SkipAndQuitIf(! exists('g:loaded_CamelCaseComplete'), "Need install
 
 source ../helpers/completetest.vim
 call vimtest#StartTap()
-call vimtap#Plan(7)
+call vimtap#Plan(9)
 edit InnerFragmentComplete.txt
 
 set completefunc=InnerFragmentComplete#InnerFragmentComplete
@@ -19,5 +19,8 @@ call IsMatchesInIsolatedLine('myFmi', ['FindMatchesIn'], 'full match for Fmi wit
 
 call IsMatchesInIsolatedLine('CCN', ['CamelCodeName'], 'inner match for CCN without prefix')
 call IsMatchesInIsolatedLine('MyCCN', ['CamelCodeName', 'CamelCodeNegative'], 'full and inner matches for CCN with My prefix')
+
+call IsMatchesInIsolatedLine('ucn', ['underscore_code_name'], 'inner match for ucn without prefix')
+call IsMatchesInIsolatedLine('my_ucn', ['underscore_code_name', 'underscore_code_negative'], 'full and inner matches for ucn with my_ prefix')
 
 call vimtest#Quit()
