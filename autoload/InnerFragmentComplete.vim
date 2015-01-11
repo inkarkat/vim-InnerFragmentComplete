@@ -11,6 +11,11 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.10.005	04-Apr-2014	ENH: Also match from the start of a
+"				CamelCaseWord without a base prefix. But then,
+"				there must be additional (unmatched) fragments
+"				after the match to avoid overlap with the
+"				CamelCaseComplete completion.
 "   1.10.004	02-Apr-2014	ENH: When the completion base is prefixed by a
 "				fragment (e.g. "my" in "myFoo"), also offer full
 "				keyword / CamelCaseWord matches, not just inner
@@ -113,13 +118,23 @@ function! InnerFragmentComplete#InnerFragmentComplete( findstart, base )
 	    \   escape(l:rest, '\')
 	    \)]
 	    if ! empty(l:camelCaseExpr)
-		call add(l:baseExpr, printf('\V%s_\@!%s',
-		\   (s:isBaseInInnerFragment ?
-		\       (l:firstLetter =~# '\u' ? '' : '\%(\%(\k\&\A\)\zs\|\<\)') :
-		\       (l:firstLetter =~# '\u' ? '\k' : '\%(\k\&\A\)') . '\zs'
-		\   ),
-		\   l:camelCaseExpr
-		\))
+		if s:isBaseInInnerFragment
+		    " Also match at the start of a CamelCaseWord.
+		    call add(l:baseExpr, printf('\V%s_\@!%s',
+		    \   (l:firstLetter =~# '\u' ? '' : '\%(\%(\k\&\A\)\zs\|\<\)'),
+		    \   l:camelCaseExpr
+		    \))
+		else
+		    " Match inner fragments of a CamelCaseWord, and from the
+		    " start of a CamelCaseWord, as long as there are additional
+		    " (unmatched) fragments after the match.
+		    call add(l:baseExpr, printf('\V%s_\@!%s\|%s_\@!%s\ze\%(\U\@<=\u\k\*\|\d\k\*\|_\k\*\)\>',
+		    \   (l:firstLetter =~# '\u' ? '\k' : '\%(\k\&\A\)') . '\zs',
+		    \   l:camelCaseExpr,
+		    \   (l:firstLetter =~# '\u' ? '' : '\%(\%(\k\&\A\)\zs\|\<\)'),
+		    \   l:camelCaseExpr
+		    \))
+		endif
 	    endif
 
 	    " Convert the matches to the case of the first character.
