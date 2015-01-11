@@ -58,6 +58,10 @@ CTRL-X i		Find matches for inner fragments. It first searches
 			completion not only offers matching inner fragments,
 			but also the complete word match, in order to complete
 			prefixed new words with existing full words.
+			For CamelCaseWord fragments, matches at the start of a
+			CamelCaseWord are also valid, as long as it's not the
+			entire CamelCaseWord that is matched (e.g. "CC"
+			matches "CamelCase" in "CamelCaseWord").
 
 			If that doesn't find any matches, a fallback search
 			will pick up base matches anywhere inside a word (e.g.
@@ -121,11 +125,14 @@ IDEAS						 *InnerFragmentComplete-ideas*
 ==============================================================================
 HISTORY					       *InnerFragmentComplete-history*
 
-1.10	RELEASEME
+1.10	04-Apr-2014
 - ENH: When the completion base is prefixed by a fragment (e.g. "my" in
   "myFoo"), also offer full keyword / CamelCaseWord matches, not just inner
   fragments, as the default completion / CamelCaseComplete would not use that
   base, yet it is helpful when completing "myFooBar" from "FooBar".
+- ENH: Also match from the start of a CamelCaseWord without a base prefix. But
+  then, there must be additional (unmatched) fragments after the match to
+  avoid overlap with the CamelCaseComplete completion.
 
 1.00	19-Dec-2013
 First published version.
