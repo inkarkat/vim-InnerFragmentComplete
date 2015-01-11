@@ -10,7 +10,7 @@
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
-"	001	01-Oct-2013	file creation
+"   1.00.001	01-Oct-2013	file creation
 
 " Avoid installing twice or when in unsupported Vim version.
 if exists('g:loaded_InnerFragmentComplete') || (v:version < 700)
