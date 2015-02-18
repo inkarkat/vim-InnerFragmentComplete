@@ -9,7 +9,7 @@ call SetCompletion("\<C-x>i")
 
 call InsertRepeat('That', 0, 0, 0, 0, 0, 0)
 call InsertRepeat('myThat', 0, 0, 0, 0, 0, 0)
-call InsertRepeat('a_under', 3, 0, 0, 0, 0)
+call InsertRepeat('a_under', 5, 0, 0, 0, 0)
 call InsertRepeat('prefixed', 0, 0)
 
 call vimtest#SaveOut()
