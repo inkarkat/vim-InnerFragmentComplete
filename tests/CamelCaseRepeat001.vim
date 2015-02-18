@@ -18,7 +18,9 @@ call InsertRepeat('TC', 0, 0, 0)
 call InsertRepeat('my_uc', 0, 0)
 call InsertRepeat('my_uc', 0, 0, 0)
 
-call InsertRepeat('ptc', 0, 0)
+call InsertRepeat('ptc', 1, 0)
+call InsertRepeat('ptc', 2, 0)
+call InsertRepeat('ptcu', 0, 0)
 
 call vimtest#SaveOut()
 call vimtest#Quit()
