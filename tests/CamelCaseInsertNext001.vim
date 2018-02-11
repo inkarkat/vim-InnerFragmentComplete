@@ -1,8 +1,9 @@
-" Test insertion of inner CamelCase fragments.
+" Test insertion of next inner CamelCase fragments.
 
 runtime plugin/CamelCaseComplete.vim
 call vimtest#SkipAndQuitIf(! exists('g:loaded_CamelCaseComplete'), "Need installed CamelCaseComplete plugin")
 
+let g:CompleteHelper_IsDefaultToBackwardSearch = 0
 source ../helpers/insert.vim
 view InnerFragmentComplete.txt
 new
