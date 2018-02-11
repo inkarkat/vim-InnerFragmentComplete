@@ -2,7 +2,7 @@
 
 source ../helpers/completetest.vim
 call vimtest#StartTap()
-call vimtap#Plan(10)
+call vimtap#Plan(12)
 edit InnerFragmentComplete.txt
 
 set completefunc=InnerFragmentComplete#InnerFragmentComplete
@@ -20,5 +20,7 @@ call IsMatchesInIsolatedLine('name', ['nameWITHOUTExtension11', 'nameWithoutExte
 call IsMatchesInIsolatedLine('In', ['InCurrentWindow', 'InOtherWindows', 'IndentPattern', 'Indent_pattern'], 'keyword strict matches for In')
 setlocal iskeyword+=:
 call IsMatchesInIsolatedLine(':In', [':IndentConsistencyCop_highlighting', ':IndentConsistencyCop_nonIndentPattern', ':IndentConsistencyCop_non_indent_pattern'], 'keyword strict matches for :In')
+call IsMatchesInIsolatedLine(':Fi', [':FindMatchesInCurrentWindow', ':FindMatchesInOtherWindows'], 'keyword strict matches for :Fi')
+call IsMatchesInIsolatedLine(':fi', [':fileCreate', ':fileDelete'], 'keyword strict matches for :fi')
 
 call vimtest#Quit()
