@@ -1,5 +1,6 @@
-" Test insertion of inner keyword.
+" Test insertion of next inner keyword.
 
+let g:CompleteHelper_IsDefaultToBackwardSearch = 0
 source ../helpers/insert.vim
 view InnerFragmentComplete.txt
 new
