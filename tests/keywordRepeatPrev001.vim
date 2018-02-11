@@ -6,6 +6,7 @@ view InnerFragmentComplete.txt
 new
 
 call SetCompletion("\<C-x>i")
+call SetCompleteExpr('InnerFragmentComplete#Expr')
 
 call InsertRepeat('That', 0, 0, 0, 0, 0, 0)
 call InsertRepeat('myThat', 0, 0, 0, 0, 0, 0)
