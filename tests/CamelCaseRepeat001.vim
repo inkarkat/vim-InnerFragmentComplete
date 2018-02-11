@@ -8,6 +8,7 @@ view InnerFragmentComplete.txt
 new
 
 call SetCompletion("\<C-x>i")
+call SetCompleteExpr('InnerFragmentComplete#Expr')
 
 call InsertRepeat('TCN', 0, 0, 0, 0, 0, 0)
 call InsertRepeat('myTCN', 0, 0, 0, 0, 0, 0)
