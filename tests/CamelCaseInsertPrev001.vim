@@ -23,6 +23,9 @@ call Insert(' my_tcn', 0)
 call Insert(' alsoWithtcn', 0)
 normal! o
 call Insert(' textPan', 1)
+call Insert(' textPan', 2)
+call Insert(' BIN_PAN', 1)
+call Insert(' BIN_PAN', 2)
 call Insert(' BIN_PAN', 3)
 normal! o
 setlocal iskeyword+=:
