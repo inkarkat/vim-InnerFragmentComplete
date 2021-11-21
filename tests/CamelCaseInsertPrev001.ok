@@ -1,4 +1,4 @@
  ThatCrazyName  (ThatCrazyName  myThatCrazyName  my_ThatCrazyName  alsoWithThatCrazyName 
  this_crazy_name  (this_crazy_name  mytcn  my_this_crazy_name  alsoWithtcn 
- textPathANDName  BIN_PathAndName 
+ textPathAndName  textPathANDName  BIN_PathANDName  BIN_PathAndName  BIN_PATH_AND_NAME 
  :FindMatchesInCurrentWindow  :fileCreate  g:fc 
