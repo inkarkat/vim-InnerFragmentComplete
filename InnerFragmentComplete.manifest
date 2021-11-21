@@ -1,0 +1,3 @@
+autoload/InnerFragmentComplete.vim
+plugin/InnerFragmentComplete.vim
+doc/InnerFragmentComplete.txt
