@@ -1,9 +1,9 @@
 "   Given the following CamelCase identifiers in a source code fragment:
-"	set Script31337PathAndNameWithoutExtension11=%~dpn0
-"	set Script31337PathANDNameWITHOUTExtension11=%~dpn0
+"	set MyScript31337PathAndNameWithoutExtension11=%~dpn0
+"	set MyScript31337PathANDNameWITHOUTExtension11=%~dpn0
 "   and the corresponding identifiers in underscore_notation:
-"	set script_31337_path_and_name_without_extension_11=%~dpn0
-"	set SCRIPT_31337_PATH_AND_NAME_WITHOUT_EXTENSION_11=%~dpn0
+"	set my_script_31337_path_and_name_without_extension_11=%~dpn0
+"	set my_SCRIPT_31337_PATH_AND_NAME_WITHOUT_EXTENSION_11=%~dpn0
 "   but not path_and_name, PathAndName, PATH_AND_NAME.
 
 " prefixedanycrazyname or prefixedanothercodename
@@ -16,7 +16,10 @@
 " prefixed_UpperCrazyUpper or prefixed_Upper_crazy_Upper or prefixed_UPPER_CRAZY_UPPER
 
 call s:FindMatchesInCurrentWindow( a:matches, a:pattern, {}, a:options )
-call s:FindMatchesInOtherWindows( a:matches, a:pattern, a:options )
+call g:FindMatchesInOtherWindows( a:matches, a:pattern, a:options )
+call s:fileCreate()
+call g:fileDelete()
+call global_fileData()
 
 let g:IndentConsistencyCop_highlighting = 'sglmf:3'
 let g:IndentConsistencyCop_non_indent_pattern = 'compartmentalize,decompress'
