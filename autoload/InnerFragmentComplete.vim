@@ -3,14 +3,18 @@
 " DEPENDENCIES:
 "   - CompleteHelper.vim autoload script, version 1.32 or higher
 "   - Complete/Repeat.vim autoload script
+"   - ingo/plugin/setting.vim autoload script
 "   - CamelCaseComplete plugin (optional)
 "
-" Copyright: (C) 2013-2014 Ingo Karkat
+" Copyright: (C) 2013-2015 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.11.006	12-Jan-2015	Remove default g:InnerFragmentComplete_complete
+"				configuration and default to 'complete' option
+"				value instead.
 "   1.10.005	04-Apr-2014	ENH: Also match from the start of a
 "				CamelCaseWord without a base prefix. But then,
 "				there must be additional (unmatched) fragments
@@ -36,7 +40,7 @@ function! s:HasCamelCaseComplete()
     return (exists('g:loaded_CamelCaseComplete') && g:loaded_CamelCaseComplete)
 endfunction
 function! s:GetCompleteOption()
-    return (exists('b:InnerFragmentComplete_complete') ? b:InnerFragmentComplete_complete : g:InnerFragmentComplete_complete)
+    return ingo#plugin#setting#GetBufferLocal('InnerFragmentComplete_complete', &complete)
 endfunction
 
 function! InnerFragmentComplete#UpperCase( matchText )
