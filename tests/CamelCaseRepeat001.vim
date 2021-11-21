@@ -3,7 +3,7 @@
 runtime plugin/CamelCaseComplete.vim
 call vimtest#SkipAndQuitIf(! exists('g:loaded_CamelCaseComplete'), "Need installed CamelCaseComplete plugin")
 
-source ../helpers/insert.vim
+runtime tests/helpers/insert.vim
 view InnerFragmentComplete.txt
 new
 
