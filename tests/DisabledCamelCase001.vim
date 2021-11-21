@@ -2,7 +2,7 @@
 
 unlet! g:loaded_CamelCaseComplete
 
-source ../helpers/completetest.vim
+runtime tests/helpers/completetest.vim
 call vimtest#StartTap()
 call vimtap#Plan(6)
 edit InnerFragmentComplete.txt
