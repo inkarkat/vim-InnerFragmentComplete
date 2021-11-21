@@ -90,6 +90,8 @@ To uninstall, use the |:RmVimball| command.
 DEPENDENCIES				  *InnerFragmentComplete-dependencies*
 
 - Requires Vim 7.0 or higher.
+- Requires the |ingo-library.vim| plugin (vimscript #4433), version 1.010 or
+  higher.
 - Requires the |CompleteHelper.vim| (vimscript #3914) plugin, version 1.32 or
   higher.
 - |CamelCaseComplete.vim| (vimscript #3915) plugin, version 1.01 or higher
@@ -101,12 +103,12 @@ CONFIGURATION				 *InnerFragmentComplete-configuration*
 For a permanent configuration, put the following commands into your |vimrc|:
 
 	 *b:InnerFragmentComplete_complete* *g:InnerFragmentComplete_complete*
-Analoguous to the 'complete' option, you can specify which buffers will be
-scanned for completion candidates. Currently, '.' (current buffer), 'w'
-(buffers from other windows), and 'b' (other listed buffers) are supported. >
-    let g:InnerFragmentComplete_complete = '.,w,b'
-The global setting can be overridden for a particular buffer
-(b:InnerFragmentComplete_complete).
+By default, the 'complete' option controls which buffers will be scanned for
+completion candidates. You can override that either for the entire plugin, or
+only for particular buffers; see |CompleteHelper_complete| for supported
+values. >
+    let g:InnerFragmentComplete_complete = '.,w,b,u'
+<
 						 *InnerFragmentComplete-remap*
 If you want to use a different mapping, map your keys to the
 <Plug>(InnerFragmentComplete) mapping target _before_ sourcing the script
@@ -125,6 +127,10 @@ IDEAS						 *InnerFragmentComplete-ideas*
 ==============================================================================
 HISTORY					       *InnerFragmentComplete-history*
 
+1.11	RELEASEME
+- Remove default g:InnerFragmentComplete_complete configuration and default to
+  'complete' option value instead.
+
 1.10	04-Apr-2014
 - ENH: When the completion base is prefixed by a fragment (e.g. "my" in
   "myFoo"), also offer full keyword / CamelCaseWord matches, not just inner
@@ -141,7 +147,7 @@ First published version.
 Started development.
 
 ==============================================================================
-Copyright: (C) 2013-2014 Ingo Karkat
+Copyright: (C) 2013-2015 Ingo Karkat
 The VIM LICENSE applies to this plugin; see |copyright|.
 
 Maintainer:	Ingo Karkat <ingo@karkat.de>
