@@ -1,6 +1,6 @@
 " Test completion of inner keyword.
 
-source ../helpers/completetest.vim
+runtime tests/helpers/completetest.vim
 call vimtest#StartTap()
 call vimtap#Plan(12)
 edit InnerFragmentComplete.txt
