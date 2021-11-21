@@ -4,12 +4,15 @@
 "   - Requires Vim 7.0 or higher.
 "   - InnerFragmentComplete.vim autoload script
 "
-" Copyright: (C) 2013 Ingo Karkat
+" Copyright: (C) 2013-2015 Ingo Karkat
 "   The VIM LICENSE applies to this script; see ':help copyright'.
 "
 " Maintainer:	Ingo Karkat <ingo@karkat.de>
 "
 " REVISION	DATE		REMARKS
+"   1.11.002	12-Jan-2015	Remove default g:InnerFragmentComplete_complete
+"				configuration and default to 'complete' option
+"				value instead.
 "   1.00.001	01-Oct-2013	file creation
 
 " Avoid installing twice or when in unsupported Vim version.
@@ -17,13 +20,6 @@ if exists('g:loaded_InnerFragmentComplete') || (v:version < 700)
     finish
 endif
 let g:loaded_InnerFragmentComplete = 1
-
-"- configuration ---------------------------------------------------------------
-
-if ! exists('g:InnerFragmentComplete_complete')
-    let g:InnerFragmentComplete_complete = '.,w,b'
-endif
-
 
 "- mappings --------------------------------------------------------------------
 
