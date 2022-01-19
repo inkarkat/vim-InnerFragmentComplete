@@ -79,10 +79,16 @@ start with "SystemCo" (full text match) or "SystemCI" (full fragment match).
 ==============================================================================
 INSTALLATION				  *InnerFragmentComplete-installation*
 
-This script is packaged as a |vimball|. If you have the "gunzip" decompressor
-in your PATH, simply edit the *.vmb.gz package in Vim; otherwise, decompress
-the archive first, e.g. using WinZip. Inside Vim, install by sourcing the
-vimball or via the |:UseVimball| command. >
+The code is hosted in a Git repo at
+    https://github.com/inkarkat/vim-InnerFragmentComplete
+You can use your favorite plugin manager, or "git clone" into a directory used
+for Vim |packages|. Releases are on the "stable" branch, the latest unstable
+development snapshot on "master".
+
+This script is also packaged as a |vimball|. If you have the "gunzip"
+decompressor in your PATH, simply edit the *.vmb.gz package in Vim; otherwise,
+decompress the archive first, e.g. using WinZip. Inside Vim, install by
+sourcing the vimball or via the |:UseVimball| command. >
     vim InnerFragmentComplete*.vmb.gz
     :so %
 To uninstall, use the |:RmVimball| command.
@@ -124,6 +130,12 @@ TODO						  *InnerFragmentComplete-todo*
 
 IDEAS						 *InnerFragmentComplete-ideas*
 
+CONTRIBUTING				    *InnerFragmentComplete-contribute*
+
+Report any bugs, send patches, or suggest features via the issue tracker at
+https://github.com/inkarkat/vim-InnerFragmentComplete/issues or email (address
+below).
+
 ==============================================================================
 HISTORY					       *InnerFragmentComplete-history*
 
@@ -147,7 +159,7 @@ First published version.
 Started development.
 
 ==============================================================================
-Copyright: (C) 2013-2015 Ingo Karkat
+Copyright: (C) 2013-2022 Ingo Karkat
 The VIM LICENSE applies to this plugin; see |copyright|.
 
 Maintainer:	Ingo Karkat <ingo@karkat.de>
